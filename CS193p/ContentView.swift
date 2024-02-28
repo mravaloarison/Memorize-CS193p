@@ -8,27 +8,33 @@
 import SwiftUI
 
 struct ContentView: View {
+    let emojis = ["🧠", "🫁", "🫀"]
+    
     var body: some View {
-        VStack {
-            CardView()
+        HStack {
+            ForEach(emojis.indices, id: \.self) { index in CardView(content: emojis[index])
+            }
         }
+        .foregroundColor(.blue)
         .padding()
     }
 }
 
 
 struct CardView: View {
+    let content: String
     @State var isFaceUp = true
     
     var body: some View {
         ZStack {
+            let card = RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
+
             if isFaceUp {
-                RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-                    .strokeBorder(lineWidth: /*@START_MENU_TOKEN@*/1.0/*@END_MENU_TOKEN@*/)
-                Text("🧠").font(.largeTitle)
+                card.fill(.white)
+                card.stroke(.blue, style: StrokeStyle(lineWidth: 5))
+                Text(content).font(.largeTitle)
             } else {
-                RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-                    .fill()
+                card.fill()
             }
         }
         .onTapGesture {
