@@ -52,11 +52,11 @@ struct ContentView: View {
     func chooseTheme(themeName: String) -> some View {
         Button (action: {
             if themeName == "Hand poses" {
-                cardShown = handPosesEmojis
+                cardShown = handPosesEmojis.shuffled()
             } else if themeName == "Animals" {
-                cardShown = animalEmojis
+                cardShown = animalEmojis.shuffled()
             } else {
-                cardShown = fruitEmojis
+                cardShown = fruitEmojis.shuffled()
             }
         }, label: {
             Text(themeName)
