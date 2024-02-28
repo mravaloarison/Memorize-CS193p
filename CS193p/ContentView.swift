@@ -8,55 +8,71 @@
 import SwiftUI
 
 struct ContentView: View {
-    let emojis = ["🧠", "🫁", "🫀", "👃", "👂", "👅", "🦷", "👄"]
+    let handPosesEmojis = ["✌️", "🫰", "🤟", "🤌", "👌", "☝️"]
+    let animalEmojis = ["🐼", "🐶", "🐬", "🦦", "🦭", "🐻"]
+    let fruitEmojis = ["🥑", "🍐", "🍓", "🍌", "🍑", "🍍"]
+
+    @State var countCard = 6
+    @State var cardShown: [String]
     
-    @State var countCard = 4
-    
+    init() {
+        _cardShown = State(initialValue: fruitEmojis)
+    }
+
     var body: some View {
         VStack {
+            Text("Memorize!").font(.largeTitle)
             ScrollView {
                 cards
             }
             Spacer()
-            handleCardsToDisplay
+            themesChoice
         }
         .padding()
     }
     
     var cards: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 90))], content: {
-            ForEach(0..<countCard, id: \.self) { index in CardView(content: emojis[index])
+            ForEach(0..<countCard, id: \.self) { index in CardView(content: cardShown[index])
                     .aspectRatio(2/3, contentMode: .fit)
             }
         })
         .foregroundColor(.blue)
     }
     
-    func countCardAdjuster(by offset: Int, symbol: String) -> some View {
-        Button(action: {
-            countCard += offset
-        }, label: {
-            Image(systemName: symbol)
+    var themesChoice: some View {
+        HStack(spacing: 60, content: {
+            themeOne
+            themeTwo
+            themeThree
         })
-        .disabled(countCard + offset < 1 || countCard + offset > emojis.count)
-    }
-    
-    var handleCardsToDisplay: some View {
-        HStack {
-            removeCardsButton
-            Spacer()
-            addCardsButton
-        }
-        .font(.largeTitle)
         .padding(.horizontal)
     }
     
-    var addCardsButton: some View {
-        countCardAdjuster(by: +1, symbol: "rectangle.stack.badge.plus")
+    func chooseTheme(themeName: String) -> some View {
+        Button (action: {
+            if themeName == "Hand poses" {
+                cardShown = handPosesEmojis
+            } else if themeName == "Animals" {
+                cardShown = animalEmojis
+            } else {
+                cardShown = fruitEmojis
+            }
+        }, label: {
+            Text(themeName)
+        })
     }
     
-    var removeCardsButton: some View {
-        countCardAdjuster(by: -1, symbol: "rectangle.stack.badge.minus")
+    var themeOne: some View {
+        chooseTheme(themeName: "Hand poses")
+    }
+    
+    var themeTwo: some View {
+        chooseTheme(themeName: "Animals")
+    }
+    
+    var themeThree: some View {
+        chooseTheme(themeName: "Fruits")
     }
 }
 
