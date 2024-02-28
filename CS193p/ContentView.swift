@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
-    let handPosesEmojis = ["✌️", "🫰", "🤟", "🤌", "👌", "☝️"]
-    let animalEmojis = ["🐼", "🐶", "🐬", "🦦", "🦭", "🐻"]
-    let fruitEmojis = ["🥑", "🍐", "🍓", "🍌", "🍑", "🍍"]
+    let handPosesEmojis = ["✌️", "🫰", "🤟", "🤌", "👌", "☝️", "✌️", "🫰", "🤟", "🤌", "👌", "☝️"]
+    let animalEmojis = ["🐼", "🐶", "🐬", "🦦", "🦭", "🐻", "🐦‍⬛","🐼", "🐶", "🐬", "🦦", "🦭", "🐻", "🐦‍⬛"]
+    let fruitEmojis = ["🥑", "🍐", "🍓", "🍌", "🍑", "🍍", "🥝", "🍉","🥑", "🍐", "🍓", "🍌", "🍑", "🍍", "🥝", "🍉"]
 
-    @State var countCard = 6
+    @State var countCard = 4
     @State var cardShown: [String]
     
     init() {
@@ -32,8 +32,8 @@ struct ContentView: View {
     }
     
     var cards: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 90))], content: {
-            ForEach(0..<countCard, id: \.self) { index in CardView(content: cardShown[index])
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))], content: {
+            ForEach(0..<cardShown.count, id: \.self) { index in CardView(content: cardShown[index])
                     .aspectRatio(2/3, contentMode: .fit)
             }
         })
