@@ -32,9 +32,9 @@ struct ContentView: View {
     }
     
     var cards: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))], content: {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 83))], content: {
             ForEach(0..<cardShown.count, id: \.self) { index in CardView(content: cardShown[index])
-                    .aspectRatio(5/6, contentMode: .fit)
+                    .aspectRatio(11/12, contentMode: .fit)
             }
         })
         .foregroundColor(.blue)
@@ -60,14 +60,14 @@ struct ContentView: View {
         }, label: {
             VStack {
                 Image(systemName: imageRepresenting).font(.largeTitle)
-                Text(themeName)
+                Text(themeName).font(.footnote)
             }
             
         })
     }
     
     var themeOne: some View {
-        chooseTheme(themeName: "Hand poses", imageRepresenting: "hand.draw.fill")
+        chooseTheme(themeName: "Hand poses", imageRepresenting: "hand.point.up.left.fill")
     }
     
     var themeTwo: some View {
@@ -82,7 +82,7 @@ struct ContentView: View {
 
 struct CardView: View {
     let content: String
-    @State var isFaceUp = true
+    @State var isFaceUp = false
     
     var body: some View {
         ZStack {
