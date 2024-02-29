@@ -16,7 +16,7 @@ struct ContentView: View {
     @State var cardShown: [String]
     
     init() {
-        _cardShown = State(initialValue: fruitEmojis)
+        _cardShown = State(initialValue: fruitEmojis.shuffled())
     }
 
     var body: some View {
@@ -34,7 +34,7 @@ struct ContentView: View {
     var cards: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))], content: {
             ForEach(0..<cardShown.count, id: \.self) { index in CardView(content: cardShown[index])
-                    .aspectRatio(2/3, contentMode: .fit)
+                    .aspectRatio(5/6, contentMode: .fit)
             }
         })
         .foregroundColor(.blue)
@@ -49,30 +49,33 @@ struct ContentView: View {
         .padding(.horizontal)
     }
     
-    func chooseTheme(themeName: String) -> some View {
+    func chooseTheme(themeName: String, imageRepresenting: String) -> some View {
         Button (action: {
-            if themeName == "Hand poses" {
-                cardShown = handPosesEmojis.shuffled()
-            } else if themeName == "Animals" {
-                cardShown = animalEmojis.shuffled()
-            } else {
-                cardShown = fruitEmojis.shuffled()
-            }
+            let emojiThemes: [String: [String]] = [
+                "Hand poses": handPosesEmojis,
+                "Animals": animalEmojis,
+                "Fruits": fruitEmojis
+            ]
+            cardShown = (emojiThemes[themeName]?.shuffled())!
         }, label: {
-            Text(themeName)
+            VStack {
+                Image(systemName: imageRepresenting).font(.largeTitle)
+                Text(themeName)
+            }
+            
         })
     }
     
     var themeOne: some View {
-        chooseTheme(themeName: "Hand poses")
+        chooseTheme(themeName: "Hand poses", imageRepresenting: "hand.draw.fill")
     }
     
     var themeTwo: some View {
-        chooseTheme(themeName: "Animals")
+        chooseTheme(themeName: "Animals", imageRepresenting: "tortoise.fill")
     }
     
     var themeThree: some View {
-        chooseTheme(themeName: "Fruits")
+        chooseTheme(themeName: "Fruits", imageRepresenting: "applelogo")
     }
 }
 
